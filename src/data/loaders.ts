@@ -29,6 +29,7 @@ interface Manifest { files: ManifestFile[] }
 
 const realSleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms))
 const unavailable = (message: string, needsFile = false): LoadFailure => new LoadFailure({ kind: 'unavailable', retryable: false, message, needsFile })
+const dataUrl = (path: string) => `${import.meta.env?.BASE_URL ?? '/'}${path}`
 
 /** GET text with up to 2 retries for network errors and 5xx. A 404, or an HTML page where data was expected (a hosting fallback), means "not available here". */
 export async function fetchText(url: string, o: LoadOptions = {}): Promise<string> {
@@ -58,7 +59,7 @@ export async function fetchText(url: string, o: LoadOptions = {}): Promise<strin
 
 async function readManifest(id: PhenomenonId, o: LoadOptions): Promise<Manifest | null> {
   try {
-    const m = JSON.parse(await fetchText(`/data/${id}/manifest.json`, o)) as Manifest
+    const m = JSON.parse(await fetchText(dataUrl(`data/${id}/manifest.json`), o)) as Manifest
     return Array.isArray(m.files) ? m : null
   } catch {
     return null
@@ -72,7 +73,7 @@ async function getPublic(id: PhenomenonId, names: string[], livePath: (name: str
   const failures: string[] = []
   for (const name of names) {
     try {
-      return { text: await fetchText(`/data/${id}/${name}`, o), origin: 'snapshot', file: man?.files.find((f) => f.name === name) ?? null, url: `/data/${id}/${name}` }
+      return { text: await fetchText(dataUrl(`data/${id}/${name}`), o), origin: 'snapshot', file: man?.files.find((f) => f.name === name) ?? null, url: dataUrl(`data/${id}/${name}`) }
     } catch (e) {
       if (e instanceof LoadFailure && e.info.kind !== 'unavailable') throw e
     }
@@ -133,8 +134,8 @@ async function loadSeaLevel(o: LoadOptions): Promise<Dataset> {
   const man = await readManifest('sea-level', o)
   const file = man?.files[0]
   if (!file) throw unavailable('No sea level file is bundled with this copy of the app. NASA requires a free Earthdata Login to download it: choose the file you downloaded, or run the snapshot script.', true)
-  const text = await fetchText(`/data/sea-level/${file.name}`, o)
-  const got: Got = { text, origin: 'snapshot', file, url: `/data/sea-level/${file.name}` }
+  const text = await fetchText(dataUrl(`data/sea-level/${file.name}`), o)
+  const got: Got = { text, origin: 'snapshot', file, url: dataUrl(`data/sea-level/${file.name}`) }
   return buildSeaLevelDataset(parsing('sea level', () => parseGmslAscii(text)), provenance(got, 'NASA Sea Level Change Team, GSFC global mean sea level (PO.DAAC)', file.sourceUrl, o))
 }
 
@@ -154,7 +155,7 @@ async function loadVegetation(site: Site, year: number, o: LoadOptions): Promise
   let origin: 'snapshot' | 'live' = 'snapshot'
   let snap: string | null = null
   try {
-    snap = await fetchText(`/data/vegetation/${site.id}-${year}.json`, o)
+    snap = await fetchText(dataUrl(`data/vegetation/${site.id}-${year}.json`), o)
   } catch (e) {
     if (e instanceof LoadFailure && e.info.kind !== 'unavailable') throw e
   }
@@ -162,7 +163,7 @@ async function loadVegetation(site: Site, year: number, o: LoadOptions): Promise
   for (const t of texts) parts.push(parsing('MODIS NDVI', () => { try { return parseModisSubset(JSON.parse(t)) } catch (e) { if (e instanceof SyntaxError) throw new ParseError('The response was not valid JSON.'); throw e } }))
   const points = parts.flatMap((p) => p.points).sort((a, b) => (a.iso < b.iso ? -1 : 1))
   if (points.length === 0) throw unavailable(`The MODIS service returned no composites for ${site.name} in ${year}.`)
-  const got: Got = { text: '', origin, file: null, url: origin === 'live' ? ornlPath(site, ornlChunks(year)[0]) : `/data/vegetation/${site.id}-${year}.json` }
+  const got: Got = { text: '', origin, file: null, url: origin === 'live' ? ornlPath(site, ornlChunks(year)[0]) : dataUrl(`data/vegetation/${site.id}-${year}.json`) }
   return buildVegetationDataset(points, site.name, provenance(got, 'MODIS/Terra MOD13Q1 NDVI via NASA ORNL DAAC web service', 'https://modis.ornl.gov/', o), parts.flatMap((p) => p.notes))
 }
 

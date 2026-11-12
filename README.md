@@ -62,6 +62,12 @@ Other commands:
 
 The NASA data tools live in `data-pipeline/` and use Python; see `docs/DATA_ACCESS.md`.
 
+## GitHub Pages
+
+The `main` branch deploys automatically to [EARTHSONIC on GitHub Pages](https://dradya.github.io/NASA-SPACE-APPS-CHALLENGE-EARTHSONIC/) through GitHub Actions. The Pages build uses the repository path, and client-side routes are supported when reloaded.
+
+GitHub Pages is static hosting and cannot run the NASA proxy rewrites used by the Vercel deployment. To load data there, publish snapshots under `public/data/` or choose a local data file; proxy-backed live NASA requests require a host that supports rewrites.
+
 ## Requirements
 
 Verified on the developer's machine: Node.js v24.21.0, npm 11.19.0, Git 2.55.0 (Windows). Node 22 or newer is required.

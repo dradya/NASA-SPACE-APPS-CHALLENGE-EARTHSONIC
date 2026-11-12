@@ -15,7 +15,7 @@ if (!container) throw new Error('EARTHSONIC: the #root element is missing from i
 
 createRoot(container).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <App />
     </BrowserRouter>
   </StrictMode>,

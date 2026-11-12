@@ -14,6 +14,7 @@ const nasaProxy = {
 // One config for the app (dev server and build) and for the UI tests (Vitest).
 // Core logic tests run with Node's own test runner (see package.json "test:core").
 export default defineConfig({
+  base: process.env.GITHUB_ACTIONS === 'true' ? '/NASA-SPACE-APPS-CHALLENGE-EARTHSONIC/' : '/',
   plugins: [react(), tailwindcss()],
   server: { proxy: nasaProxy },
   preview: { proxy: nasaProxy },
