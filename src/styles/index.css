@@ -1,0 +1,135 @@
+@import 'tailwindcss';
+
+/*
+  EARTHSONIC design tokens.
+  Palette: an observatory at night. Deep navy and black, cool "signal" cyan for data and sound,
+  warm "ember" for emphasis. Tests in tests/core/design-tokens.test.ts read this file and check
+  contrast (WCAG) for every text/background pair in both themes. Keep tokens as plain #hex
+  values inside the @theme block and the high-contrast block so that test can parse them.
+*/
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Fraunces Variable', ui-serif, Georgia, 'Times New Roman', serif;
+
+  --color-space-950: #03060d;
+  --color-space-900: #070d1a;
+  --color-space-800: #0c1629;
+  --color-space-700: #14213a;
+
+  --color-ink-100: #eaf0ff;
+  --color-ink-300: #b9c6e4;
+  --color-ink-500: #94a5cb;
+
+  --color-signal: #6fd8f0;
+  --color-ember: #ffb36b;
+  --color-focus: #ffe08a;
+  --color-edge: #2a3d63;
+}
+
+/* High-contrast theme: switched on by the header toggle, or automatically when the operating system asks
+   for more contrast. Only the values change; every utility keeps working. */
+:root[data-contrast='high'] {
+  --color-space-950: #000000;
+  --color-space-900: #000000;
+  --color-space-800: #000000;
+  --color-space-700: #0a0a0a;
+
+  --color-ink-100: #ffffff;
+  --color-ink-300: #ffffff;
+  --color-ink-500: #e3e9f7;
+
+  --color-signal: #8ff3ff;
+  --color-ember: #ffc78f;
+  --color-focus: #ffff66;
+  --color-edge: #a9b8d9;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background-color: var(--color-space-950);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100vh;
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--color-ink-100);
+    background-color: transparent;
+    line-height: 1.6;
+  }
+
+  /* One clear, high-visibility focus ring everywhere. */
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+  }
+
+  /* Programmatic focus targets (the main region and the page heading after navigation) should not
+     draw a ring around a whole block of content. Keyboard focus on controls is unaffected. */
+  main:focus,
+  [data-page-heading]:focus {
+    outline: none;
+  }
+
+  ::selection {
+    background: var(--color-signal);
+    color: var(--color-space-950);
+  }
+}
+
+/* Decorative night sky: fixed stars and a faint atmospheric limb. No meaning is carried by it. */
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(1.5px 1.5px at 8% 14%, rgb(255 255 255 / 0.85) 50%, transparent 51%),
+    radial-gradient(1px 1px at 17% 62%, rgb(255 255 255 / 0.6) 50%, transparent 51%),
+    radial-gradient(1px 1px at 23% 31%, rgb(255 255 255 / 0.7) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 34% 8%, rgb(255 255 255 / 0.8) 50%, transparent 51%),
+    radial-gradient(1px 1px at 41% 47%, rgb(255 255 255 / 0.5) 50%, transparent 51%),
+    radial-gradient(1px 1px at 52% 22%, rgb(255 255 255 / 0.7) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 61% 71%, rgb(255 255 255 / 0.65) 50%, transparent 51%),
+    radial-gradient(1px 1px at 68% 12%, rgb(255 255 255 / 0.75) 50%, transparent 51%),
+    radial-gradient(1px 1px at 74% 39%, rgb(255 255 255 / 0.55) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 83% 56%, rgb(255 255 255 / 0.8) 50%, transparent 51%),
+    radial-gradient(1px 1px at 91% 18%, rgb(255 255 255 / 0.7) 50%, transparent 51%),
+    radial-gradient(1px 1px at 96% 77%, rgb(255 255 255 / 0.5) 50%, transparent 51%),
+    radial-gradient(140% 55% at 50% 118%, rgb(74 163 255 / 0.3), transparent 62%),
+    radial-gradient(90% 45% at 12% -8%, rgb(111 216 240 / 0.09), transparent 60%),
+    var(--color-space-950);
+}
+
+:root[data-contrast='high'] .sky {
+  display: none;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise {
+  animation: rise 520ms ease-out both;
+}
+
+/* Respect the user's motion preference everywhere. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

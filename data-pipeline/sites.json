@@ -1,0 +1,10 @@
+{
+  "note": "Vegetation sites (single source for the Python snapshot script; src/registry/phenomena.ts repeats them and tests/core/registry.test.ts checks they match).",
+  "sites": [
+    { "id": "amazon", "name": "Central Amazon rainforest, Brazil", "lat": -3.1, "lon": -60.0 },
+    { "id": "sahel", "name": "Sahel savanna, Niger", "lat": 13.5, "lon": 2.1 },
+    { "id": "corn-belt", "name": "US Corn Belt, Iowa", "lat": 42.0, "lon": -93.6 },
+    { "id": "deccan", "name": "Deccan Plateau croplands, India", "lat": 18.5, "lon": 76.5 },
+    { "id": "boreal", "name": "Boreal forest, central Siberia", "lat": 62.0, "lon": 104.0 }
+  ]
+}

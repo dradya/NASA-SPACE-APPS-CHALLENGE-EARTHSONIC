@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/nasa/giss/:path*", "destination": "https://data.giss.nasa.gov/gistemp/tabledata_v4/:path*" },
+    { "source": "/nasa/nsidc/:path*", "destination": "https://noaadata.apps.nsidc.org/NOAA/G02135/north/daily/data/:path*" },
+    { "source": "/nasa/ornl/:path*", "destination": "https://modis.ornl.gov/rst/api/v1/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

@@ -1,0 +1,7 @@
+# EARTHSONIC data pipeline: Python dependencies needed NOW (Phase 2 data-access kit).
+# Phase 5 adds: numpy, pandas, opencv-python-headless, pillow.
+# Versions are intentionally unpinned; after a successful install, run
+#   .\.venv\Scripts\python.exe -m pip freeze > requirements.lock.txt
+# and commit that file so everyone gets the same versions.
+earthaccess
+requests

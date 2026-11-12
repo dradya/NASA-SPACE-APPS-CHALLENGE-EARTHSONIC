@@ -1,0 +1,7 @@
+dist
+coverage
+node_modules
+data-pipeline
+package-lock.json
+LICENSE
+*.md

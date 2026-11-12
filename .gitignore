@@ -1,0 +1,39 @@
+# Dependencies and build output
+node_modules/
+dist/
+*.tsbuildinfo
+coverage/
+.vite/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Raw downloads from NASA (large originals; the pipeline regenerates what the app needs)
+data-pipeline/raw/*
+!data-pipeline/raw/.gitkeep
+
+# Secrets and local config (this project needs none; never commit credentials)
+.env
+.env.*
+!.env.example
+.netrc
+_netrc
+
+# Hosting / tooling
+.vercel/
+*.log
+
+# Editors and OS
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db
+
+# Explicit credential guards (belt and braces)
+data-pipeline/.env
+data-pipeline/.env.*
+!data-pipeline/.env.example
+*.netrc
