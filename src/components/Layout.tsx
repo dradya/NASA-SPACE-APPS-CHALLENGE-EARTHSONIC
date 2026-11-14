@@ -1,4 +1,5 @@
-import { Outlet } from 'react-router'
+import { useEffect } from 'react'
+import { Outlet, useLocation } from 'react-router'
 import { useRouteFocus } from '../a11y/useRouteFocus'
 import { Brand } from './Brand'
 import { ContrastToggle } from './ContrastToggle'
@@ -8,6 +9,42 @@ import { SkipLink } from './SkipLink'
 /** The shell shared by every page: skip link, banner with navigation, main region, footer. */
 export function Layout() {
   useRouteFocus()
+  const location = useLocation()
+
+  useEffect(() => {
+    const main = document.getElementById('main')
+    if (!main) return
+
+    const targets = [
+      ...Array.from(main.children),
+      ...Array.from(main.querySelectorAll('li, figure')),
+    ].filter((element): element is HTMLElement => element instanceof HTMLElement && !element.classList.contains('rise'))
+    const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
+
+    targets.forEach((element, index) => {
+      element.classList.add('scroll-reveal')
+      element.style.setProperty('--reveal-delay', `${(index % 5) * 75}ms`)
+    })
+
+    if (prefersReducedMotion || typeof IntersectionObserver === 'undefined') {
+      targets.forEach((element) => element.classList.add('is-visible'))
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return
+          entry.target.classList.add('is-visible')
+          observer.unobserve(entry.target)
+        })
+      },
+      { threshold: 0.06, rootMargin: '0px 0px -36px 0px' },
+    )
+
+    targets.forEach((element) => observer.observe(element))
+    return () => observer.disconnect()
+  }, [location.pathname, location.search])
 
   return (
     <>
