@@ -115,7 +115,9 @@
     radial-gradient(ellipse at 76% 38%, rgb(30 145 164 / 0.2), transparent 38%),
     radial-gradient(ellipse at 47% 80%, rgb(75 88 190 / 0.17), transparent 42%),
     radial-gradient(ellipse at 90% 82%, rgb(50 115 173 / 0.12), transparent 34%);
-  animation: nebula-drift 56s ease-in-out infinite alternate;
+  animation:
+    nebula-drift 32s ease-in-out infinite alternate,
+    nebula-breathe 10s ease-in-out infinite alternate;
 }
 
 .sky::after {
@@ -129,7 +131,9 @@
     radial-gradient(1.5px 1.5px at 76% 18%, white 50%, transparent 55%),
     radial-gradient(1px 1px at 88% 78%, white 50%, transparent 55%);
   background-size: 340px 280px;
-  animation: star-drift 70s linear infinite;
+  animation:
+    star-drift 70s linear infinite,
+    star-twinkle 5.5s ease-in-out infinite alternate;
 }
 
 :root[data-contrast='high'] .sky {
@@ -144,10 +148,28 @@
 
 @keyframes nebula-drift {
   from {
-    transform: translate3d(-1.5%, -0.5%, 0) scale(1);
+    transform: translate3d(-2.5%, -1%, 0) scale(1);
   }
   to {
-    transform: translate3d(1.5%, 1%, 0) scale(1.04);
+    transform: translate3d(2.5%, 1.5%, 0) scale(1.06);
+  }
+}
+
+@keyframes nebula-breathe {
+  from {
+    opacity: 0.62;
+  }
+  to {
+    opacity: 0.9;
+  }
+}
+
+@keyframes star-twinkle {
+  from {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 0.42;
   }
 }
 
