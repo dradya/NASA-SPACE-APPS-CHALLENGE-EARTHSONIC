@@ -101,8 +101,8 @@
     radial-gradient(120% 58% at 52% 112%, rgb(50 116 204 / 0.22), transparent 66%),
     radial-gradient(78% 48% at 13% -6%, rgb(111 216 240 / 0.13), transparent 62%),
     radial-gradient(75% 55% at 94% 28%, rgb(129 83 198 / 0.12), transparent 65%),
-    linear-gradient(180deg, rgb(3 6 13 / 0.84), rgb(3 6 13 / 0.91) 65%, rgb(3 6 13 / 0.96)),
-    url('/media/backgrounds/deep-field.webp') center 42% / cover no-repeat,
+    linear-gradient(180deg, rgb(3 6 13 / 0.72), rgb(3 6 13 / 0.84) 58%, rgb(3 6 13 / 0.93)),
+    url('/media/backgrounds/nebula-field.webp') center / cover no-repeat,
     var(--color-space-950);
 }
 
