@@ -101,7 +101,9 @@
     radial-gradient(120% 58% at 52% 112%, rgb(50 116 204 / 0.22), transparent 66%),
     radial-gradient(78% 48% at 13% -6%, rgb(111 216 240 / 0.13), transparent 62%),
     radial-gradient(75% 55% at 94% 28%, rgb(129 83 198 / 0.12), transparent 65%),
-    linear-gradient(155deg, #03060d 0%, #071021 48%, #040711 100%);
+    linear-gradient(180deg, rgb(3 6 13 / 0.84), rgb(3 6 13 / 0.91) 65%, rgb(3 6 13 / 0.96)),
+    url('/media/backgrounds/deep-field.webp') center 42% / cover no-repeat,
+    var(--color-space-950);
 }
 
 .sky::before {
@@ -271,13 +273,34 @@
 }
 
 .phenomenon-art {
+  --art-photo: linear-gradient(120deg, #070d1a, #0e1c30);
   position: relative;
   height: 11rem;
   overflow: hidden;
   isolation: isolate;
   background:
     radial-gradient(ellipse at 50% 55%, var(--art-glow), transparent 67%),
-    linear-gradient(120deg, rgb(7 13 26 / 0.3), rgb(14 28 48 / 0.72));
+    linear-gradient(120deg, rgb(5 10 20 / 0.34), rgb(5 10 20 / 0.78)),
+    var(--art-photo);
+  background-position: center, center, center 45%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.phenomenon-art--global-temperature {
+  --art-photo: url('/media/backgrounds/warming-world.webp');
+}
+
+.phenomenon-art--sea-level {
+  --art-photo: url('/media/backgrounds/ocean-depths.webp');
+}
+
+.phenomenon-art--sea-ice {
+  --art-photo: url('/media/backgrounds/polar-coast.webp');
+}
+
+.phenomenon-art--vegetation {
+  --art-photo: url('/media/backgrounds/forest-canopy.webp');
 }
 
 .phenomenon-art::before,
