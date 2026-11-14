@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 import { HeroEarth } from '../components/HeroEarth'
 import { PageHeader } from '../components/PageHeader'
+import { PhenomenonArt } from '../components/PhenomenonArt'
 import { btnPrimary, btn, h2, panel } from '../components/ui'
 import { PHENOMENA, PHENOMENON_IDS } from '../registry/phenomena.ts'
 
@@ -32,17 +33,26 @@ export function LandingPage() {
           ))}
         </ol>
       </section>
-      <section aria-labelledby="feat-h" className="mt-14">
-        <h2 id="feat-h" className={h2}>What you can listen to</h2>
+      <section aria-labelledby="feat-h" className="mt-20">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.24em] text-signal">Four signals · one planet</p>
+            <h2 id="feat-h" className={h2}>A universe of change, in four signals</h2>
+          </div>
+          <p className="max-w-md text-sm text-ink-300">Explore the atmosphere, oceans, polar ice and living land through the data NASA already collects.</p>
+        </div>
         <ul className="mt-5 grid gap-4 sm:grid-cols-2">
           {PHENOMENON_IDS.map((id) => {
             const p = PHENOMENA[id]
             return (
-              <li key={id} className={panel}>
-                <p className="font-display text-2xl text-ink-100">{p.title}</p>
-                <p className="mt-1 text-ink-300">{p.tagline}</p>
-                <p className="mt-2 text-sm text-ink-300">{p.hearing}</p>
-                <p className="mt-4"><Link to={`/studio?p=${id}`} className="text-sm font-medium text-signal underline">Listen to {p.short.toLowerCase()}</Link></p>
+              <li key={id} className={`phenomenon-card phenomenon-card--${id}`}>
+                <PhenomenonArt id={id} />
+                <div className="phenomenon-card__body">
+                  <p className="font-display text-2xl text-ink-100">{p.title}</p>
+                  <p className="mt-1 text-ink-300">{p.tagline}</p>
+                  <p className="mt-3 text-sm text-ink-300">{p.hearing}</p>
+                  <p className="mt-5"><Link to={`/studio?p=${id}`} className="phenomenon-card__link">Listen to {p.short.toLowerCase()} <span aria-hidden="true">↗</span></Link></p>
+                </div>
               </li>
             )
           })}

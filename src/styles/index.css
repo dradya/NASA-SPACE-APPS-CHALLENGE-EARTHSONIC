@@ -103,8 +103,28 @@
     var(--color-space-950);
 }
 
+.sky::after {
+  position: absolute;
+  inset: -20%;
+  content: '';
+  opacity: 0.28;
+  background:
+    radial-gradient(1px 1px at 12% 24%, white 50%, transparent 55%),
+    radial-gradient(1px 1px at 44% 64%, white 50%, transparent 55%),
+    radial-gradient(1.5px 1.5px at 76% 18%, white 50%, transparent 55%),
+    radial-gradient(1px 1px at 88% 78%, white 50%, transparent 55%);
+  background-size: 340px 280px;
+  animation: star-drift 70s linear infinite;
+}
+
 :root[data-contrast='high'] .sky {
   display: none;
+}
+
+@keyframes star-drift {
+  to {
+    transform: translate3d(35px, 28px, 0);
+  }
 }
 
 @keyframes rise {
@@ -120,6 +140,346 @@
 
 .rise {
   animation: rise 520ms ease-out both;
+}
+
+.phenomenon-card {
+  --art-glow: rgb(111 216 240 / 0.16);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgb(111 216 240 / 0.18);
+  border-radius: 1rem;
+  background: linear-gradient(145deg, rgb(12 22 41 / 0.94), rgb(4 9 19 / 0.94));
+  box-shadow: 0 16px 48px rgb(0 0 0 / 0.18);
+  transition: transform 280ms ease, border-color 280ms ease, box-shadow 280ms ease;
+}
+
+.phenomenon-card:hover {
+  transform: translateY(-5px);
+  border-color: rgb(111 216 240 / 0.48);
+  box-shadow: 0 22px 58px rgb(0 0 0 / 0.32), 0 0 42px var(--art-glow);
+}
+
+.phenomenon-card:focus-within {
+  border-color: var(--color-focus);
+}
+
+.phenomenon-card--global-temperature {
+  --art-glow: rgb(255 179 107 / 0.2);
+}
+
+.phenomenon-card--sea-level {
+  --art-glow: rgb(73 174 255 / 0.2);
+}
+
+.phenomenon-card--sea-ice {
+  --art-glow: rgb(157 226 255 / 0.2);
+}
+
+.phenomenon-card--vegetation {
+  --art-glow: rgb(123 216 143 / 0.2);
+}
+
+.phenomenon-card__body {
+  position: relative;
+  z-index: 1;
+  padding: 1.4rem 1.5rem 1.5rem;
+}
+
+.phenomenon-card--details .phenomenon-card__body {
+  padding-top: 1.5rem;
+}
+
+.phenomenon-card__link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-signal);
+  font-size: 0.875rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.phenomenon-card__link span {
+  transition: transform 180ms ease;
+}
+
+.phenomenon-card__link:hover span {
+  transform: translate(3px, -3px);
+}
+
+.phenomenon-art {
+  position: relative;
+  height: 11rem;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 55%, var(--art-glow), transparent 67%),
+    linear-gradient(120deg, rgb(7 13 26 / 0.3), rgb(14 28 48 / 0.72));
+}
+
+.phenomenon-art::before,
+.phenomenon-art::after {
+  position: absolute;
+  z-index: -1;
+  width: 15rem;
+  height: 15rem;
+  border: 1px solid rgb(234 240 255 / 0.06);
+  border-radius: 50%;
+  content: '';
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.phenomenon-art::after {
+  width: 19rem;
+  height: 19rem;
+  border-color: rgb(234 240 255 / 0.035);
+}
+
+.phenomenon-art svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(100%, 22rem);
+  height: 100%;
+  overflow: visible;
+  transform: translate(-50%, -50%);
+}
+
+.phenomenon-art__label,
+.phenomenon-art__index {
+  position: absolute;
+  bottom: 0.85rem;
+  color: var(--color-ink-300);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.phenomenon-art__label {
+  left: 1.4rem;
+}
+
+.phenomenon-art__index {
+  right: 1.4rem;
+  color: rgb(234 240 255 / 0.46);
+}
+
+.art-orbit {
+  stroke: rgb(255 226 189 / 0.45);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+}
+
+.art-orbiting {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  animation: solar-orbit 12s linear infinite;
+}
+
+.art-satellite {
+  fill: #fff0d6;
+  filter: drop-shadow(0 0 5px #ffb36b);
+}
+
+.art-sun {
+  fill: #ff9a54;
+  filter: drop-shadow(0 0 14px rgb(255 137 70 / 0.82));
+  animation: solar-pulse 4s ease-in-out infinite;
+}
+
+.art-sun-core {
+  fill: #ffe4a8;
+  opacity: 0.9;
+}
+
+.art-ray {
+  stroke: #ffd08b;
+  stroke-linecap: round;
+  stroke-width: 2;
+  opacity: 0.65;
+}
+
+.art-ocean {
+  fill: #102d54;
+  stroke: #59baff;
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 14px rgb(73 174 255 / 0.34));
+}
+
+.art-horizon {
+  stroke: rgb(162 222 255 / 0.28);
+  stroke-width: 1;
+}
+
+.art-waterline {
+  stroke: #83d8ff;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.art-waterline--back {
+  opacity: 0.44;
+  animation: water-rise 5s ease-in-out infinite;
+}
+
+.art-waterline--front {
+  stroke: #d3f4ff;
+  animation: water-rise 5s ease-in-out -2.5s infinite;
+}
+
+.art-rise-arrow {
+  stroke: #d3f4ff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  animation: arrow-float 2.4s ease-in-out infinite;
+}
+
+.art-ice-orbit {
+  stroke: rgb(201 239 255 / 0.36);
+  stroke-dasharray: 2 5;
+  animation: ice-rotate 28s linear infinite;
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+}
+
+.art-snowflake {
+  stroke: #d7f4ff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 7px rgb(157 226 255 / 0.8));
+  animation: ice-rotate 32s linear infinite reverse;
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+}
+
+.art-ice-dot {
+  fill: #c8efff;
+  animation: ice-twinkle 3s ease-in-out infinite;
+}
+
+.art-ice-dot--two {
+  animation-delay: -1.4s;
+}
+
+.art-ground {
+  stroke: #7bd88f;
+  stroke-linecap: round;
+  stroke-width: 3;
+  filter: drop-shadow(0 0 8px rgb(123 216 143 / 0.62));
+}
+
+.art-stem,
+.art-leaf-vein {
+  stroke: #a7efab;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.art-leaf {
+  fill: #49b878;
+  stroke: #b6f2a6;
+  stroke-width: 1;
+  transform-box: view-box;
+  transform-origin: 80px 105px;
+}
+
+.art-leaf--left {
+  animation: leaf-sway-left 4.5s ease-in-out infinite;
+}
+
+.art-leaf--right {
+  fill: #79d88b;
+  animation: leaf-sway-right 4.5s ease-in-out infinite;
+}
+
+.art-leaf-vein {
+  opacity: 0.72;
+}
+
+.art-firefly {
+  fill: #dcff8c;
+  filter: drop-shadow(0 0 5px #dcff8c);
+  animation: firefly 3s ease-in-out infinite;
+}
+
+.art-firefly--two {
+  animation-delay: -1.5s;
+}
+
+.phenomenon-card--details .phenomenon-art {
+  height: 13rem;
+}
+
+@keyframes solar-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes solar-pulse {
+  50% {
+    filter: drop-shadow(0 0 21px rgb(255 137 70 / 0.95));
+  }
+}
+
+@keyframes water-rise {
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes arrow-float {
+  50% {
+    transform: translateY(-3px);
+    opacity: 0.65;
+  }
+}
+
+@keyframes ice-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ice-twinkle {
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+}
+
+@keyframes leaf-sway-left {
+  50% {
+    transform: rotate(-6deg);
+  }
+}
+
+@keyframes leaf-sway-right {
+  50% {
+    transform: rotate(6deg);
+  }
+}
+
+@keyframes firefly {
+  50% {
+    opacity: 0.35;
+    transform: translateY(-7px);
+  }
+}
+
+:root[data-contrast='high'] .phenomenon-card {
+  background: var(--color-space-900);
+  box-shadow: none;
+}
+
+:root[data-contrast='high'] .phenomenon-art {
+  background: var(--color-space-950);
 }
 
 /* Respect the user's motion preference everywhere. */
